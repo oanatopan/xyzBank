@@ -7,39 +7,41 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
+import pages.LoginPage;
+import pages.ManagerPage;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CreateCustomerAccountsTest {
-
     public WebDriver driver;
 
     @Test
 
-    public void automationTest() {
+    public void automationTest(){
         driver = new ChromeDriver();
         driver.get("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
-        WebElement bankManagerElement = driver.findElement(By.xpath("//button[text()='Bank Manager Login']"));
-        bankManagerElement.click();
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.loginBankManager();
 
-        WebElement addCustomerElement = driver.findElement(By.xpath("//button[@ng-click='addCust()']"));
-        addCustomerElement.click();
+        ManagerPage managerPage = new ManagerPage(driver);
+        managerPage.createCustomer();
 
         WebElement firstNameElement = driver.findElement(By.xpath("//input[@placeholder='First Name']"));
-        String firstNameValue = "Oana";
+        String firstNameValue = "Madalina";
         firstNameElement.sendKeys(firstNameValue);
 
         WebElement lastNameElement = driver.findElement(By.xpath("//input[@placeholder='Last Name']"));
-        String lastNameValue = "Topan";
+        String lastNameValue = "Chera";
         lastNameElement.sendKeys(lastNameValue);
 
         WebElement postCodeElement = driver.findElement(By.xpath("//input[@placeholder='Post Code']"));
-        String postCodeValue = "E10AA";
+        String postCodeValue = "307382";
         postCodeElement.sendKeys(postCodeValue);
 
         WebElement submitCustomerElement = driver.findElement(By.xpath("//button[@class='btn btn-default']"));
@@ -50,25 +52,33 @@ public class CreateCustomerAccountsTest {
         System.out.println(customerAlertText);
         customerAlert.accept();
 
-        WebElement openAccount = driver.findElement(By.xpath("//button[@ng-click='openAccount()']"));
-        openAccount.click();
+        WebElement openAccountElement = driver.findElement(By.xpath("//button[@ng-click='openAccount()']"));
+        openAccountElement.click();
 
-//        Pentru un customer vreau sa ii creez 3 conturi
+        // Pentru un customer vreau sa ii creez 3 conturi diferite (moneda diferita)
+
+//        List<String> currencyValuesList = new ArrayList<>();
+//        currencyValuesList.add("Dollar");
+//        currencyValuesList.add("Pound");
+//        currencyValuesList.add("Rupee");
+
+//        SAU
 
         List<String> currencyValuesList = Arrays.asList("Dollar", "Pound", "Rupee");
         String fullName = firstNameValue + " " + lastNameValue;
 
-        for (String s : currencyValuesList) {
-            WebElement customerName = driver.findElement(By.id("userSelect"));
-            Select customerSelect = new Select(customerName);
+        for (int i = 0 ; i < currencyValuesList.size(); i++) {
+
+            WebElement customerNameElement = driver.findElement(By.id("userSelect"));
+            Select customerSelect = new Select(customerNameElement);
             customerSelect.selectByVisibleText(fullName);
 
-            WebElement currency = driver.findElement(By.id("currency"));
-            Select currencySelect = new Select(currency);
-            currencySelect.selectByVisibleText(s);
+            WebElement currencyElement = driver.findElement(By.id("currency"));
+            Select currencySelect = new Select(currencyElement);
+            currencySelect.selectByVisibleText(currencyValuesList.get(i));
 
-            WebElement process = driver.findElement(By.xpath("//button[@type='submit']"));
-            process.click();
+            WebElement processButton = driver.findElement(By.xpath("//button[@type='submit']"));
+            processButton.click();
 
             Alert accountAlert = driver.switchTo().alert();
             String accountAlertText = accountAlert.getText();
@@ -76,13 +86,12 @@ public class CreateCustomerAccountsTest {
             accountAlert.accept();
         }
 
-        WebElement customers = driver.findElement(By.xpath("//button[@ng-click='showCust()']"));
-        customers.click();
+
+        WebElement customerElement = driver.findElement(By.xpath("//button[@ng-click='showCust()']"));
+        customerElement.click();
 
         WebElement searchCustomerElement = driver.findElement(By.xpath("//input[@placeholder='Search Customer']"));
+        searchCustomerElement.click();
         searchCustomerElement.sendKeys(fullName);
-
-//        driver.quit();
-
     }
 }

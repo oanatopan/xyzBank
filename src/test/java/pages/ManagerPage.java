@@ -5,17 +5,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
+public class ManagerPage {
     public WebDriver driver;
 
     public ManagerPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver.this);
+        PageFactory.initElements(driver,this);
     }
-    @FindBy (xpath = "//button[@ng-click='showCust()']")
+
+    @FindBy(xpath = "//button[@ng-click='addCust()']")
     public WebElement addCustomerElement;
 
-    public void loginBankManager(){
+    public void createCustomer(){
         addCustomerElement.click();
-    };
+    }
 }
