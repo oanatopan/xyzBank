@@ -1,0 +1,18 @@
+{
+[
+  {
+    "firstNameValue": "Oana",
+    "lastNameValue": "Topan",
+    "postCodeValue": "E10AB",
+    "currencyValue": "Dollar",
+    "emailValue": "test@test.com"
+  },
+  {
+    "firstNameValue": "Oana2",
+    "lastNameValue": "Topan2",
+    "postCodeValue": "E10AB2",
+    "currencyValue": "Dollar2",
+    "emailValue": "test@test.com"
+  }
+]
+}

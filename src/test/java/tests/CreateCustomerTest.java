@@ -1,55 +1,42 @@
 package tests;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
+import models.CustomerModel;
 import org.testng.annotations.Test;
 import pages.*;
+  import shareData.SharedData;
 
-import java.time.Duration;
-import java.util.List;
+public class CreateCustomerTest extends SharedData {
 
-public class CreateCustomerTest {
-    public WebDriver driver;
+    //data-driven testing = concept pe baza caruia datele de test se vor salva in fisiere externe cu scopul de a le
+    //accesa in orice test avem nevoie + sa le putem refolosi
+    //pentru acest concept se accepta diferite extensii de fisiere
+    //key-1..value
+    //firstName=[Alex,Madalina,Oana]
+
 
     @Test
 
     public void automationTest(){
-        driver = new ChromeDriver();
-        driver.get("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login");
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
-        LoginPage loginPage = new LoginPage(driver);
+        CustomerModel testData = new CustomerModel("src/test/resources/CustomerData.json");
+
+        LoginPage loginPage = new LoginPage(getDriver());
         loginPage.loginBankManager();
 
-        ManagerPage managerPage = new ManagerPage(driver);
+        ManagerPage managerPage = new ManagerPage(getDriver());
         managerPage.createCustomer();
 
-        String firstNameValue = "Madalina";
-        String lastNameValue = "Chera";
-        String postCodeValue = "307382";
-
-        CustomerPage customerPage = new CustomerPage(driver);
-        customerPage.createCustomerProcess(firstNameValue, lastNameValue, postCodeValue);
+        CustomerPage customerPage = new CustomerPage(getDriver());
+        customerPage.createCustomerProcess(testData);
         customerPage.openAccount();
 
-        String fullName = firstNameValue + " " + lastNameValue;
-        String currencyValue = "Dollar";
+        AccountPage accountPage = new AccountPage(getDriver());
+        accountPage.createAccountProcess(testData);
+        accountPage.openCustomersPage();
 
-        AccountPage accountPage = new AccountPage(driver);
-        accountPage.createAccountProcess(fullName, currencyValue);
-
-        accountPage.openCustomerspage();
-
-        CustomersPage customersPage = new CustomersPage(driver);
-        customersPage.searchCustomer(firstNameValue);
-        customersPage.validateCustomer(firstNameValue, lastNameValue, postCodeValue);
+        CustomersPage customersPage = new CustomersPage(getDriver());
+        customersPage.searchCustomer(testData);
+        customersPage.validateCustomer(testData);
         customersPage.deleteCustomer();
-
     }
 }
