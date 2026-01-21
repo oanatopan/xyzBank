@@ -30,7 +30,7 @@ public class CreateCustomerTest extends SharedData {
         customerPage.createCustomerProcess(testData);
         customerPage.openAccount();
 
-        AccountPage accountPage = new AccountPage(getDriver());
+        AccountPage accountPage = new AccountPage(getDriver()) ;
         accountPage.createAccountProcess(testData);
         accountPage.openCustomersPage();
 

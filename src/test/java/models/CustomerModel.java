@@ -12,15 +12,11 @@ public class CustomerModel {
     private String currencyValue;
     private String fullNameValue;
 
-    public CustomerModel(String filePath) {
-        loadFromJson(filePath);
-    }
     //ar trebui sa incarc fisierul json
     //ar trebui sa citesc din fisier si sa extrag valorile
     //valorile pe care le-am extras trebuie sa le dau ca parametrii mai jos
-
-    public String getFirstNameValue() {
-        return firstNameValue;
+    public CustomerModel(String filePath) {
+        loadFromJson(filePath);
     }
 
     public void loadFromJson(String filePath) {
@@ -31,6 +27,10 @@ public class CustomerModel {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getFirstNameValue() {
+        return firstNameValue;
     }
 
     public void setFirstNameValue(String firstNameValue) {
