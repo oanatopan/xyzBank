@@ -14,7 +14,7 @@ public class CreateCustomerTest extends SharedData {
     //firstName=[Alex,Madalina,Oana]
 
 
-    @Test
+    @Test(groups = {SuiteType.REGRESSION_SUITE,SuiteType.CUSTOMER_SUITE,SuiteType.ACCOUNT_SUITE })
 
     public void automationTest(){
 
