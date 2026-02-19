@@ -30,6 +30,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Run Automation test
-      run: mvn clean install
+      run: mvn clean install -Dgroups=@SmokeSuite
 
    

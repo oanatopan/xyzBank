@@ -20,7 +20,7 @@ import java.util.List;
 public class CreateCustomersTest extends SharedData {
 
 
-    @Test
+    @Test(groups = "@SmokeSuite")
 
     public void automationTest(){
         CustomerModel testData = new CustomerModel("src/test/resources/CustomersData.json");
